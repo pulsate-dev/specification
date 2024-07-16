@@ -5,6 +5,8 @@
 
 ----
 
+- [ER図 (WIP)](./e-r.md)
+- [モデルリファレンス (WIP)](./model.md)
 - [API エンドポイント](./endpoint.md)
   - [投稿API (WIP)](./endpoint/notes.md)
   - [タイムラインAPI (WIP)](./endpoint/timeline.md)
