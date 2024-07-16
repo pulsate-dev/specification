@@ -1,0 +1,14 @@
+[book]
+src = "src"
+title = "Pulsate Specification"
+language = "ja"
+multilingual = false
+authors = ["m1sk9 <me@m1sk9.dev>", "Pulsate Project Team <info@pulsate.dev>"]
+
+[build]
+build-dir = "build"
+create-missing = false
+
+[preprocessor.alerts]
+
+[preprocessor.pagetoc]
