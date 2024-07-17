@@ -38,7 +38,7 @@ Bearer
 
 特に明記しない限り、文字数は **以下のコードを実行して計算できる文字数** とする.
 
-```tsx
+```ts
 const count = (s: string) => {
   const segmenter = new Intl.Segmenter({ granularity: "word" });
   return [...segmenter.segment(s)].length;
