@@ -69,10 +69,10 @@ TimelineModule ->> ActivityPubModule: 投稿作成イベント発火
   - `pkg/intermodule/<モジュール名>.ts`のようなファイル名をつける.
 
 ```ts
-import { type Result } from '@mikuroxina/mini-fn';
+import { type Result } from "@mikuroxina/mini-fn";
 
-import { type Account, type AccountName } from '../accounts/model/account.js';
-import type { FetchAccountService } from '../accounts/service/fetchAccount.js';
+import { type Account, type AccountName } from "../accounts/model/account.js";
+import type { FetchAccountService } from "../accounts/service/fetchAccount.js";
 
 // Accountモジュールの他モジュールに対して公開するメソッド
 export class AccountModule {
@@ -84,5 +84,4 @@ export class AccountModule {
     return await this.fetchAccountService.fetchAccount(name);
   }
 }
-
 ```

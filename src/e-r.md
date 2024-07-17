@@ -101,9 +101,10 @@ note_attachment {
 note_attachment }o--|| note: ""
 note_attachment }o--|| medium: "references"
 ```
+
 </details>
 
-----
+---
 
 - 未定義リスト
   - リノートの扱い
@@ -114,7 +115,8 @@ note_attachment }o--|| medium: "references"
 
 > [!NOTE]
 >
-> ドライブが階層構造などを持たないという仕様になった上, 一旦これ以上は複雑化させない方針になっているのでメディアが直接アカウントに紐づく形になっています.
+> ドライブが階層構造などを持たないという仕様になった上,
+> 一旦これ以上は複雑化させない方針になっているのでメディアが直接アカウントに紐づく形になっています.
 
 > [!IMPORTANT]
 >
