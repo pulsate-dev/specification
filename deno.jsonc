@@ -1,0 +1,11 @@
+{
+    "tasks": {
+        "build": "mdbook build",
+        "dev": "mdbook serve",
+        "watch": "mdbook watch",
+        "test": "mdbook test",
+        "clean": "mdbook clean",
+        "format": "deno fmt src/",
+        "format:check": "deno fmt --check"
+    }
+}
