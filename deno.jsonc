@@ -6,6 +6,6 @@
         "test": "mdbook test",
         "clean": "mdbook clean",
         "format": "deno fmt src/",
-        "format:check": "deno fmt --check"
+        "format:check": "deno fmt --check src/"
     }
 }
