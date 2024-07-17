@@ -103,7 +103,7 @@
 ### 入力
 
 - パスパラメータ
-  - `account_id|account_name`: ``snowflake`|`string``
+  - `account_id,account_name`: `snowflake`|`string`
     - アカウント名かアカウントのIDを指定できます.
 - クエリパラメータ
   - `has_attachment`: `bool | undefined`
