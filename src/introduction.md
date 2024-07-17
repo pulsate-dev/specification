@@ -2,7 +2,8 @@
 
 <!-- toc -->
 
-Pulsate Specification は Pulsate プロジェクトに関する APIエンドポイントや設計などの仕様を記述したドキュメントです.
+<!-- deno-fmt-ignore -->
+Pulsate Specification は Pulsate プロジェクトに関するAPIエンドポイントや設計などの仕様を記述したドキュメントです.
 
 プロジェクトの概要については [こちら](./project.md) をご覧ください.
 

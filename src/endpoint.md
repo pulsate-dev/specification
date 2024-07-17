@@ -22,7 +22,7 @@ Pulsate v0 APIでは殆どのエンドポイントで資格情報が必要であ
 
 エンドポイントへアクセスするときの`Authorization` HTTPヘッダーに
 
-```json
+```text
 Bearer <token>
 ```
 
@@ -30,7 +30,7 @@ Bearer <token>
 
 例:
 
-```json
+```text
 Bearer
 ```
 
@@ -117,13 +117,13 @@ Unicodeで規定された文字以外のデータを表現するときの記法
     のスキームである`acct:`を取り除き, `@`に置き換えたもの
   - 例: アカウント名が `@john@example.com`である場合
 
-```json
+```text
 <@john@example.com>
 ```
 
 - 宛先のホスト名(FQDN)は **省略不可**
 
-```md
+```text
 <@john@example.com> <@la@mi.growthers.dev> <@gargon@mastodon.social>
 ```
 

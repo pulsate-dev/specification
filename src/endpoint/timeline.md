@@ -12,7 +12,7 @@
 ### 入力
 
 - パスパラメータ
-  - `timeline_type`: ```string``, `undefined``
+  - `timeline_type`: `string`, `undefined`
     - とり得る値: `home` / `global`
     - デフォルト: `home`
 - クエリパラメータ
@@ -22,7 +22,7 @@
   - `no_nsfw` : `bool | undefined`
     - デフォルト: `false`
     - NSFWフラグの立っているファイルを含む投稿を返さなくなります
-  - `before_id` : ``snowflake`| undefined`
+  - `before_id` : `snowflake| undefined`
     - デフォルト: `undefined`
       - ~~デフォルトでは現在取得できる最新の投稿から20件取得します.~~
     - 指定したIDより古い投稿を返します.指定したIDの投稿は含まれません
@@ -112,7 +112,7 @@
   - `no_nsfw` : `bool | undefined`
     - デフォルト: `false`
     - NSFWフラグの立っているファイルを1つでも含む投稿を返さなくなります
-  - `before_id` : ``snowflake`| undefined`
+  - `before_id` : `snowflake`| undefined`
     - デフォルト: `undefined`
       - デフォルトでは現在取得できる最新の投稿から20件取得します.
     - 指定したIDより古い投稿を返します.指定したIDの投稿は含まれません
