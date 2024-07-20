@@ -104,16 +104,16 @@
 }
 ```
 
-| 項目名    | 型                    | 説明                                                               | 制約          | 例 |
-| --------- | --------------------- | ------------------------------------------------------------------ | ------------- | -- |
-| id        | `snowflake`           | ファイルのID                                                       |               |    |
-| name      | `string`              | ファイル名                                                         | 1≤N≤256[文字] |    |
-| author_id | `snowflake`           | アップロードしたアカウントのID                                     |               |    |
-| hash      | `string`              | 画像のblurhash                                                     |               |    |
-| mime      | `string`              | mimeタイプ                                                         |               |    |
-| nsfw      | `boolean`             | [Untitled](https://www.notion.so/525158aa6a3c4af79b87bff62736f844) |               |    |
-| url       | `string`              | 画像へのリンク                                                     |               |    |
-| thumbnail | `string`, `undefined` | (利用可能な場合のみ) 縮小版のサムネイル画像                        |               |    |
+| 項目名    | 型                    | 説明                                        | 制約          | 例 |
+| --------- | --------------------- | ------------------------------------------- | ------------- | -- |
+| id        | `snowflake`           | ファイルのID                                |               |    |
+| name      | `string`              | ファイル名                                  | 1≤N≤256[文字] |    |
+| author_id | `snowflake`           | アップロードしたアカウントのID              |               |    |
+| hash      | `string`              | 画像のblurhash                              |               |    |
+| mime      | `string`              | mimeタイプ                                  |               |    |
+| nsfw      | `boolean`             | [NSFWフラグ](../endpoint.md#nsfwフラグ)     |               |    |
+| url       | `string`              | 画像へのリンク                              |               |    |
+| thumbnail | `string`, `undefined` | (利用可能な場合のみ) 縮小版のサムネイル画像 |               |    |
 
 **`400 Bad Request`**
 
