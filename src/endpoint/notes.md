@@ -232,7 +232,7 @@
 | blur         | `string`    | 添付ファイルが画像であるときのサムネイルの [blurhash](https://blurha.sh/) |        |    |
 | nsfw         | `boolean`   | ToDo                                                                      |        |    |
 
-### 入力例:
+### 入力例
 
 ```json
 {
