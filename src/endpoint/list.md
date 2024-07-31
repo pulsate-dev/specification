@@ -79,7 +79,7 @@
   "id": "18342938400393",
   "title": "Edited Title",
   "public": true,
-  "assigners": [
+  "assignees": [
     {
       "id": "1838933554",
       "name": "@john@example.com"
@@ -127,7 +127,7 @@
   "id": "18342938400393",
   "title": "Pulsate Developers",
   "public": false,
-  "assigners": [
+  "assignees": [
     {
       "id": "1838933554",
       "name": "@john@example.com"
@@ -166,7 +166,7 @@
     "id": "18342938400393",
     "title": "Pulsate Developers",
     "public": false,
-    "assigners": [
+    "assignees": [
       {
         "id": "1838933554",
         "name": "@john@example.com"
