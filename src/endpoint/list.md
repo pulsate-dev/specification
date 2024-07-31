@@ -44,6 +44,70 @@
 
 - `TITLE_TOO_LONG`: タイトルが長すぎます
 
+## `PATCH /lists/{list_id}`
+
+リスト情報を編集します
+
+### 入力
+
+- パスパラメータ
+  - `list_id`: `string`
+    - 編集したいリストのID
+    
+- body: `application/json`
+
+| 項目名 | 型        | 説明                 | 制約          |
+| ------ | --------- | -------------------- | ------------- |
+| title  | `string`  | リストのタイトル     | 1≤N≤100[文字] |
+| public | `boolean` | 公開・非公開のフラグ |               |
+
+### 入力例
+
+```json
+{
+  "title": "Edited Title",
+  "public": true
+}
+```
+
+### 出力
+
+**`200 OK`**
+
+```json
+{
+  "id": "18342938400393",
+  "title": "Edited Title",
+  "public": true,
+  "assigners": [
+    {
+      "id": "1838933554",
+      "name": "@john@example.com"
+    }
+  ]
+}
+```
+
+**`404 Not Found`**
+
+```json
+{
+  "error": "TEST_ERROR_CODE"
+}
+```
+
+- `LIST_NOTFOUND`: リストが見つかりません
+
+**`400 Bad Request`**
+
+```json
+{
+  "error": "TEST_ERROR_CODE"
+}
+```
+
+- `TITLE_TOO_LONG`: タイトルが長すぎます
+
 ## `GET /lists/{list_id}`
 
 リスト情報を取得します
