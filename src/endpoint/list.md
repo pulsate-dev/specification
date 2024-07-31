@@ -53,7 +53,7 @@
 - パスパラメータ
   - `list_id`: `string`
     - 編集したいリストのID
-    
+
 - body: `application/json`
 
 | 項目名 | 型        | 説明                 | 制約          |
