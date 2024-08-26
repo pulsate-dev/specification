@@ -1,11 +1,13 @@
 {
-    "tasks": {
-        "build": "mdbook build",
-        "dev": "mdbook serve",
-        "watch": "mdbook watch",
-        "test": "mdbook test",
-        "clean": "mdbook clean",
-        "format": "deno fmt src/",
-        "format:check": "deno fmt --check src/"
-    }
+  "tasks": {
+    "build": "mdbook build",
+    "dev": "mdbook serve",
+    "watch": "mdbook watch",
+    "test": "mdbook test",
+    "clean": "mdbook clean",
+    "format": "deno fmt src/",
+    "format:check": "deno fmt --check src/",
+    "generate:doc": "deno run --allow-read --allow-write --allow-run scripts/generate.ts"
+  },
+  "imports": { "@std/fs": "jsr:@std/fs@^1.0.1" }
 }
