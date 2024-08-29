@@ -245,8 +245,6 @@
 }
 ```
 
-
-
 ## `POST /notifications/{id}/read`
 
 通知を既読にします
