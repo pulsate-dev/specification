@@ -34,7 +34,7 @@
       "id": "209384",
       "name": "@johndoe@example.com",
       "nickname": "John Doe🌤",
-      "avatar": "https://cdn.example.com/johndoe/avater"
+      "avatar": "https://cdn.example.com/johndoe/avatar"
     }
   },
   "createdAt": "2024-08-01T00:00:00.000Z"
@@ -57,7 +57,7 @@
       "id": "209384",
       "name": "@johndoe@example.com",
       "nickname": "John Doe🌤",
-      "avatar": "https://cdn.example.com/johndoe/avater"
+      "avatar": "https://cdn.example.com/johndoe/avatar"
     }
   },
   "createdAt": "2024-08-01T00:00:00.000Z"
@@ -80,7 +80,7 @@
       "id": "209384",
       "name": "@johndoe@example.com",
       "nickname": "John Doe🌤",
-      "avatar": "https://cdn.example.com/johndoe/avater"
+      "avatar": "https://cdn.example.com/johndoe/avatar"
     }
   },
   "createdAt": "2024-08-01T00:00:00.000Z"
@@ -105,7 +105,7 @@
       "id": "209384",
       "name": "@johndoe@example.com",
       "nickname": "John Doe🌤",
-      "avatar": "https://cdn.example.com/johndoe/avater"
+      "avatar": "https://cdn.example.com/johndoe/avatar"
     }
   },
   "createdAt": "2024-08-01T00:00:00.000Z"
@@ -132,7 +132,7 @@
       "id": "209384",
       "name": "@johndoe@example.com",
       "nickname": "John Doe🌤",
-      "avatar": "https://cdn.example.com/johndoe/avater"
+      "avatar": "https://cdn.example.com/johndoe/avatar"
     }
   },
   "createdAt": "2024-08-01T00:00:00.000Z"
@@ -159,7 +159,7 @@
       "id": "209384",
       "name": "@johndoe@example.com",
       "nickname": "John Doe🌤",
-      "avatar": "https://cdn.example.com/johndoe/avater"
+      "avatar": "https://cdn.example.com/johndoe/avatar"
     }
   },
   "createdAt": "2024-08-01T00:00:00.000Z"
@@ -188,7 +188,7 @@
     // アカウントニックネーム
     "nickname": "John Doe🌤",
     // アバター画像のURL
-    "avatar": "https://cdn.example.com/johndoe/avater"
+    "avatar": "https://cdn.example.com/johndoe/avatar"
   }
 }
 ```
