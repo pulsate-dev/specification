@@ -7,11 +7,18 @@
 |   `info`   |   一般的なお知らせ   |
 |   `warn`   | ユーザー全体への警告 |
 
-## 通知の種類 / `actor`の種類
+## 通知の種類
 
-通知の種類
+| 種類コード | 通知が発生する条件 |
+| :--: | :----: |
+| `followed` | フォローされたとき | 
+| `followRequested` | フォローをリクエストされたとき |
+| `followAccepted`  | 自分が行ったフォローリクエストが承認されたとき |
+| `mentioned` | メンションされたとき |
+| `renoted` | リノートされたとき |
+| `reacted` | リアクションされたとき |
 
-## `followed` - フォローされた
+### `followed` - フォローされた
 
 取り得る`actor`の種類:
 
@@ -34,7 +41,7 @@
 }
 ```
 
-## `followRequested` - フォローをリクエストされた
+### `followRequested` - フォローをリクエストされた
 
 取り得る`actor`の種類:
 
@@ -57,7 +64,7 @@
 }
 ```
 
-## `followAccepted` - (自分が行った)フォローが承認された
+### `followAccepted` - (自分が行った)フォローリクエストが承認されたとき
 
 取り得る`actor`の種類:
 
@@ -80,7 +87,7 @@
 }
 ```
 
-## `mentioned` - メンションされた
+### `mentioned` - メンションされた
 
 取り得る`actor`の種類:
 
@@ -105,7 +112,7 @@
 }
 ```
 
-## `renoted` - リノートされた
+### `renoted` - リノートされた
 
 取り得る`actor`の種類:
 
@@ -132,7 +139,7 @@
 }
 ```
 
-## `reacted` - リアクションされた
+### `reacted` - リアクションされた
 
 取り得る`actor`の種類:
 
@@ -159,7 +166,7 @@
 }
 ```
 
-## `actor`について
+#### `actor`について
 
 通知を発生させた主体の種類
 
@@ -192,19 +199,28 @@
 {
   "type": "system",
   "system": {
+    // ToDo
   }
 }
 ```
 
-## `GET /notifications`
+## APIエンドポイント一覧
 
-届いているすべての通知を取得します。すでに既読がついている通知は表示されません。
+### `GET /notifications`
 
-### 入力
+届いているすべての通知を取得します。
 
-なし
+#### 入力
 
-### 出力
+パスパラメータ:
+- `limit`: number, 返す通知の最大数
+  - デフォルト: 30 / 最大: 50
+- `after`: string(date), この日以降の通知を返します
+  - デフォルト: "1970-01-01"
+- `include_read`: boolean, trueの時は既読の通知も返します
+  - デフォルト: false
+
+#### 出力
 
 - body: `application/json`
 
@@ -236,7 +252,7 @@
           "id": "209384",
           "name": "@johndoe@example.com",
           "nickname": "John Doe🌤",
-          "avatar": "https://cdn.example.com/johndoe/avater"
+          "avatar": "https://cdn.example.com/johndoe/avatar"
         }
       },
       "createdAt": "2024-08-01T00:00:00.000Z"
@@ -245,11 +261,11 @@
 }
 ```
 
-## `POST /notifications/{id}/read`
+### `POST /notifications/{id}/read`
 
 通知を既読にします
 
-### 入力
+#### 入力
 
 - パスパラメータ
   - `id`: string
@@ -261,6 +277,6 @@
 {}
 ```
 
-### 出力
+#### 出力
 
 **`204 No Content`** 通知を既読にしました。
