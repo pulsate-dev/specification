@@ -196,3 +196,103 @@
 - `NOTHING_LEFT`: これ以上古い投稿はありません
   - 1つでも古い投稿がある場合は投稿を返します
 - `ACCOUNT_NOT_FOUND` : 指定したアカウントが見つかりませんでした
+
+## `GET /timeline/conversations`
+
+ダイレクト投稿を受け取った、もしくは送った相手を取得します.
+
+### 入力
+
+なし
+
+### 出力
+
+**`200 OK`**
+
+```json
+[
+  {
+    "account": {
+      "accountId": "20983985",
+      "accountName": "@johndoe@example.com",
+      "nickname": "John Doe",
+      "avatar": "https://example.com/images/avatar.png"
+    },
+    "updatedAt": "2023-09-10T00:00:00.000Z"
+  }
+]
+```
+
+## `GET /timeline/conversations/{account_id}`
+
+指定したアカウントとのダイレクト投稿を取得します.
+
+### 入力
+
+- パスパラメータ
+  - `account_id`: `snowflake`
+    - ダイレクト投稿を取得したいアカウントID.
+- クエリパラメータ
+  - `before_id`: `snowflake` | `undefined`
+    - デフォルト: `undefined`
+    - 指定したIDより古い投稿を返します.指定したIDの投稿は含まれません
+
+### 出力
+
+**`200 OK`**
+
+タイムラインを取得します.
+
+```json
+[
+  {
+    "id": "3893974892",
+    "content": "hello world!",
+    "cw_comment": "",
+    "visibility": "public",
+    "created_at": "2023-09-27T14:17:29.169Z",
+    "attachment_files": [
+      {
+        "id": "204980348583",
+        "filename": "hello.png",
+        "content_type": "image/png",
+        "url": "https://example.com/images/hello.png",
+        "blur": "eoig:woi!our@nj/d",
+        "nsfw": false
+      }
+    ],
+    "reactions": [
+      {
+        "emoji": "<:alias:11938437>",
+        "reacted_by": "3085763644"
+      },
+      {
+        "emoji": "🎉",
+        "reacted_by": "494984128"
+      }
+    ],
+    "author": {
+      "id": "2874987398",
+      "name": "@john@example.com",
+      "display_name": "John Doe",
+      "bio": "I am Test User.",
+      "avatar": "https://example.com/images/avatar.png",
+      "header": "https://example.com/images/header.png",
+      "followed_count": 200,
+      "following_count": 10
+    }
+  }
+]
+```
+
+**`404 Not Found`**
+
+```json
+{
+  "error": "TEST_ERROR_CODE"
+}
+```
+
+- `NOTHING_LEFT`: これ以上古い投稿はありません
+  - 1つでも古い投稿がある場合は投稿を返します
+- `ACCOUNT_NOT_FOUND` : 指定したアカウントが見つかりませんでした
