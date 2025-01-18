@@ -7,7 +7,7 @@ Twitter の Snowflake をベースに, 次のようなビットフィールド
 
 先頭に時刻を含んでいるため, そのまま時刻順にソートが可能です.
 
-```json
+```
 111111111111111111111111111111111111111111 1111111111 111111111111
 64                                         22         12          0
 timestamp                                  worker id  incremental
@@ -28,6 +28,52 @@ TypeScript 上ではこのような型として表現します. 型引数によ�
 declare const snowflakeNominal: unique symbol;
 export type ID<T> = string & { [snowflakeNominal]: T };
 ```
+[このコードへのリンク (pkg/id/type.ts)](https://github.com/pulsate-dev/pulsate/blob/7659bb22977dbe31ac85a84d564c2cef0559492c/pkg/id/type.ts#L1-L2)
+
+### 生成と利用の方法
+#### モデル側での定義
+モデルごとにこのような形でモデル固有のIDの型を定義します
+
+```typescript
+export type AccountID = ID<Account>;
+```
+
+#### ID生成方法
+IDは`id`パッケージの`SnowflakeIDGenerator`クラスを利用して生成します。  
+
+> [!IMPORTANT]
+> このとき、SnowflakeIDGeneratorは必ずコンストラクタで受け取るようにしてください。
+> ```typescript
+> export class RegisterService {
+>   /** 省略 **/
+>   private readonly snowflakeIDGenerator: SnowflakeIDGenerator;
+>
+>   constructor(arg: {
+>     /** 省略 **/
+>     idGenerator: SnowflakeIDGenerator;
+>   }) {
+>     /** 省略 **/
+>     this.snowflakeIDGenerator = arg.idGenerator;
+>   }
+> ```
+> [このコードへのリンク (pkg/accounts/service/register.ts)](https://github.com/pulsate-dev/pulsate/blob/7659bb22977dbe31ac85a84d564c2cef0559492c/pkg/accounts/service/register.ts#L37-L56)
+
+`SnowflakeIDGenerator.generate<T>()`メソッドを呼び出してIDを生成することができます。  
+この時の型引数 T は、生成したいIDの型を入れてください
+```typescript
+const idRes = this.snowflakeIDGenerator.generate<AccountID>()
+```
+
+ID生成時にエラーが発生する場合があるので、必ずエラーハンドリングが必要です。
+
+#### IDの利用方法
+
+テストなどで利用する際にIDを静的に定義したい場合や、APIなどでユーザーからstring形式で受け取ったIDはアサーションすることでIDに変換できます。
+
+```typescript
+const accountID = "31415926535" as AccountID;
+```
+
 
 ## 認証トークン
 
@@ -69,20 +115,6 @@ export type ID<T> = string & { [snowflakeNominal]: T };
 利用後に無効化しておかないと奪取されて再利用されるリスクがあります.
 危険度は高いですがネットワーク上に流れることがほとんどないため,
 このリスクには対処せず保有することにします.
-
-## 連合
-
-このシステムが実際に稼働しているプロセスを表すものです. この連合 (つまり Pulsate
-サーバーのインスタンス) は次の属性を持ちます.
-
-- `id`: すべての連合において一意な [ID](#id)
-- `origin`: オリジン
-- `name`: 名称
-- `description`: 説明
-- `version`: (ソフトウェア)バージョン
-- `software_name` : ソフトウェア名
-- `extensions`: 拡張対応リスト
-- `maintainer_name` : 管理者名
 
 ## アカウント
 
@@ -176,51 +208,3 @@ stateDiagram-v2
 
 </details>
 
-## 検索述語
-
-タイムラインの設定や検索クエリに用いられる組み合わせ可能な述語です.
-これは後述の検索命題を用いて帰納的に構成されます.
-
-- `Atom`: 原子式で, ある検索命題をそのまま述語とします.
-- `Not`: 論理否定です.
-  ある検索述語によって選択されなかったもののみを選択する述語です.
-- `And`: 論理積です. 2
-  つの検索述語の両方によって選択されたものを選択する述語です.
-- `Or`: 論理和です. 2
-  つの検索述語のいずれか一方または両方によって選択されたものを選択する述語です.
-- `Xor`: 排他的論理和です. 2
-  つの検索述語のどちらか一方のみによって選択されたものを選択する述語です.
-
-## 検索命題
-
-命題は 所属, 特定のワード, ユーザー ID
-などを表す次の属性のあつまりとして定義されます.
-いずれの属性の条件も未設定にでき,
-その場合は選択されずそのまま次の条件へと渡ります.
-
-- `id_mask`: そのユーザー ID が完全に一致するのもだけを選択します.
-- `belonging`: その投稿が所属する連合が完全一致するのもだけを選択します.
-- `match_word`:
-  任意の自然言語エントリに対してそのテキストが部分一致するものだけを選択します.
-
-## メディアソース
-
-文章, 画像, 動画などのコンテンツを効率的かつ高速に配信するオリジンおよびその
-URL, その配信を提供するサービスを指します.
-
-## 内部メディアソース
-
-(wip)
-
-## 外部メディアソース
-
-(wip)
-
-## 投稿
-
-Pulsate に対して送信されたユーザー生成コンテンツのエンティティです.
-
-すべての投稿は [ID](#id) を保持しています. これに加えて,
-以下の属性が関連付けられます.
-
-(wip)

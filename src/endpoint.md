@@ -1,4 +1,4 @@
-# タイムライン
+# APIについて
 
 `main` ブランチの最新 API リファレンスは
 [api.pulsate.dev/reference](https://api.pulsate.dev/reference) で閲覧可能.
@@ -31,8 +31,22 @@ Bearer <token>
 例:
 
 ```text
-Bearer
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 ```
+
+**資格情報が必要ないエンドポイントについて**
+Pulsate v0 APIでは、資格情報が必要なエンドポイントであっても、場合によっては資格情報がない場合でもアクセス可能なエンドポイントが存在する。  
+例えば、あるアカウントのタイムラインを取得するエンドポイントの場合:
+- 有効な資格情報がある場合
+  - フォローしている場合は FOLLOWER 公開範囲の投稿も返す
+  - フォローしていない場合は資格情報がない場合と変わらない
+- **資格情報が無効な場合**
+  - 認証トークンが期限切れや改ざんされている場合
+  - 認証エラーを返す
+- 資格情報がない場合
+  - `Authorization`ヘッダーが空の場合
+  - PUBLIC/HOME 公開範囲の投稿を返す
+
 
 ## “文字数”の扱い
 
@@ -40,7 +54,7 @@ Bearer
 
 ```ts
 const count = (s: string) => {
-  const segmenter = new Intl.Segmenter({ granularity: "word" });
+  const segmenter = new Intl.Segmenter("ja-JP", { granularity: "grapheme" });
   return [...segmenter.segment(s)].length;
 };
 ```
@@ -159,44 +173,3 @@ errorの中には`エラーコード` が入る.
 
 - CWフラグとは,投稿本文に何らかのコンテンツ警告があることを示すフラグである.
 - 大抵の場合,投稿の注釈(投稿本文より短い,本文の内容を端的に表した文)のみが表示され,本文は[続きを読む]といったボタンを押さないと見ることができない
-
----
-
-- リファレンスへの追加状況 (See:
-  [pulsate-dev/specification#3](https://github.com/pulsate-dev/specification/issues/3)
-  )
-  - [ ] アカウント
-    - [x] アカウント情報(プロフィール)を管理する
-    - [x] アカウント情報の取得
-    - [x] アカウントの削除
-    - [ ] アカウントの検索
-    - [x] アカウントのサイレンス
-    - [x] アカウトのサイレンス解除
-    - [x] アカウントの凍結
-    - [x] アカウトの解凍
-    - [x] ログイン
-    - [x] アカウント登録
-  - [x] フォロー
-    - [x] アカウントをフォロー
-    - [x] アカウントをフォロー解除
-  - [x] ノート
-    - [x] ノートの作成
-    - [x] (自分の)ノートの削除
-    - [x] リノートの作成
-    - [x] リノートの解除(削除)
-    - [x] ノートへのリアクションの作成
-    - [x] ノートへのリアクションの解除
-    - [x] ノートのブックマーク
-    - [x] ノートの検索
-    - [x] ノートの取得
-  - [x] リスト
-    - [x] リストの作成
-    - [x] リストの削除
-    - [x] リストへのアカウントの追加
-    - [x] リストへのアカウントの除外/削除
-    - [x] リストのノート取得
-  - [x] ドライブ
-    - [x] ファイルのアップロード
-    - [x] ファイルの取得
-    - [x] ノートへの紐付け
-    - [x] NSFWフラグの設定
