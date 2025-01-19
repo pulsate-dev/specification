@@ -8,28 +8,26 @@
 
 ```mermaid
 sequenceDiagram
-autonumber
-actor ユーザー
+    autonumber
+    actor ユーザー
+    ユーザー ->> NoteModule: 投稿
 
-ユーザー ->> NoteModule: 投稿
+    opt ダイレクト投稿の場合
+        NoteModule ->> AccountModule: 送信先アカウントの存在チェック
+    end
 
-opt ダイレクト投稿の場合
-	NoteModule ->> AccountModule: 送信先アカウントの存在チェック
-end
+    NoteModule ->> AccountModule: 投稿者情報取得
 
-NoteModule ->> AccountModule: 投稿者情報取得
+    opt リノートの場合
+        NoteModule ->> NoteModule: 引用 or リノート先情報取得
+    end
 
-opt リノートの場合
-	NoteModule ->> NoteModule: 引用 or リノート先情報取得
-end
-
-NoteModule ->> ユーザー: 投稿完了
-
-NoteModule ->> SearchModule: 検索インデックス投入
-NoteModule ->> TimelineModule: 投稿作成イベント発火
-TimelineModule ->> AccountModule: フォロー関係情報取得
-TimelineModule ->> NotificationModule:通知イベント発火
-TimelineModule ->> ActivityPubModule: 投稿作成イベント発火
+    NoteModule ->> ユーザー: 投稿完了
+    NoteModule ->> SearchModule: 検索インデックス投入
+    NoteModule ->> TimelineModule: 投稿作成イベント発火
+    TimelineModule ->> AccountModule: フォロー関係情報取得
+    TimelineModule ->> NotificationModule: 通知イベント発火
+    TimelineModule ->> ActivityPubModule: 投稿作成イベント発火
 ```
 
 </details>
@@ -98,10 +96,10 @@ Pulsateのバックエンドでは"モジュール"と呼ばれる単位にプ�
 
 ## Intermoduleパッケージ (モジュール間通信)
 
-モジュールは他のモジュールのServiceをimportすることは禁止されています.\
-そのため, 他のモジュールの機能を利用したい場合には Intermodule
-パッケージを利用します.\
-Intermodule
-パッケージはそれぞれのモジュールごとに定義されるインタフェースで、モジュールが他のモジュールから参照される機能を公開するようになっています.\
-Intermodule
+モジュールは他のモジュールのServiceをimportすることは禁止されています. そのため,
+他のモジュールの機能を利用したい場合には Intermodule パッケージを利用します.
+
+`Intermodule`
+パッケージはそれぞれのモジュールごとに定義されるインタフェースで、モジュールが他のモジュールから参照される機能を公開するようになっています.
+`Intermodule`
 の内部ではそのモジュールのServiceのメソッドを呼び出すよう実装されています.
