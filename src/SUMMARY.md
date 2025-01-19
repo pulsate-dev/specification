@@ -5,7 +5,6 @@
 
 ---
 
-- [ER図 (WIP)](./e-r.md)
 - [モデルリファレンス (WIP)](./model.md)
 - [API エンドポイント](./endpoint.md)
   - [アカウントAPI](./endpoint/account.md)
@@ -20,4 +19,3 @@
 
 - [内部フロー・モジュール間通信](./module.md)
 - [アクセス制御](./authorization.md)
-- [ユースケース図](./usecase.md)
