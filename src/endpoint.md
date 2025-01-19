@@ -34,9 +34,10 @@ Bearer <token>
 Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 ```
 
-**資格情報が必要ないエンドポイントについて**
-Pulsate v0 APIでは、資格情報が必要なエンドポイントであっても、資格情報がない場合にアクセス可能なエンドポイントが存在する。  
+**資格情報が必要ないエンドポイントについて** Pulsate v0
+APIでは、資格情報が必要なエンドポイントであっても、資格情報がない場合にアクセス可能なエンドポイントが存在する。\
 例えば、あるアカウントのタイムラインを取得するエンドポイントの場合:
+
 - 有効な資格情報がある場合
   - フォローしている場合は FOLLOWER 公開範囲の投稿も返す
   - フォローしていない場合は資格情報がない場合と変わらない
@@ -46,7 +47,6 @@ Pulsate v0 APIでは、資格情報が必要なエンドポイントであって
 - 資格情報がない場合
   - `Authorization`ヘッダーが空の場合
   - PUBLIC/HOME 公開範囲の投稿を返す
-
 
 ## “文字数”の扱い
 

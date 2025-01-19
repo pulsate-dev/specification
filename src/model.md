@@ -28,10 +28,13 @@ TypeScript 上ではこのような型として表現します. 型引数によ�
 declare const snowflakeNominal: unique symbol;
 export type ID<T> = string & { [snowflakeNominal]: T };
 ```
+
 [このコードへのリンク (pkg/id/type.ts)](https://github.com/pulsate-dev/pulsate/blob/7659bb22977dbe31ac85a84d564c2cef0559492c/pkg/id/type.ts#L1-L2)
 
 ### 生成と利用の方法
+
 #### モデル側での定義
+
 モデルごとにこのような形でモデル固有のIDの型を定義します
 
 ```typescript
@@ -39,10 +42,12 @@ export type AccountID = ID<Account>;
 ```
 
 #### ID生成方法
-IDは`id`パッケージの`SnowflakeIDGenerator`クラスを利用して生成します。  
+
+IDは`id`パッケージの`SnowflakeIDGenerator`クラスを利用して生成します。
 
 > [!IMPORTANT]
 > このとき、SnowflakeIDGeneratorは必ずコンストラクタで受け取るようにしてください。
+>
 > ```typescript
 > export class RegisterService {
 >   /** 省略 **/
@@ -56,12 +61,14 @@ IDは`id`パッケージの`SnowflakeIDGenerator`クラスを利用して生成�
 >     this.snowflakeIDGenerator = arg.idGenerator;
 >   }
 > ```
+>
 > [このコードへのリンク (pkg/accounts/service/register.ts)](https://github.com/pulsate-dev/pulsate/blob/7659bb22977dbe31ac85a84d564c2cef0559492c/pkg/accounts/service/register.ts#L37-L56)
 
 IDを生成するには`SnowflakeIDGenerator.generate<T>()`メソッドを呼び出します。
 この時の型引数 T は、生成したいIDの型を入れてください
+
 ```typescript
-const idRes = this.snowflakeIDGenerator.generate<AccountID>()
+const idRes = this.snowflakeIDGenerator.generate<AccountID>();
 ```
 
 ID生成時にエラーが発生する場合があるので、必ずエラーハンドリングが必要です。
@@ -73,7 +80,6 @@ ID生成時にエラーが発生する場合があるので、必ずエラーハ
 ```typescript
 const accountID = "31415926535" as AccountID;
 ```
-
 
 ## 認証トークン
 
@@ -207,4 +213,3 @@ stateDiagram-v2
 ```
 
 </details>
-
