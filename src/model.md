@@ -58,7 +58,7 @@ IDは`id`パッケージの`SnowflakeIDGenerator`クラスを利用して生成�
 > ```
 > [このコードへのリンク (pkg/accounts/service/register.ts)](https://github.com/pulsate-dev/pulsate/blob/7659bb22977dbe31ac85a84d564c2cef0559492c/pkg/accounts/service/register.ts#L37-L56)
 
-`SnowflakeIDGenerator.generate<T>()`メソッドを呼び出してIDを生成することができます。  
+IDを生成するには`SnowflakeIDGenerator.generate<T>()`メソッドを呼び出します。
 この時の型引数 T は、生成したいIDの型を入れてください
 ```typescript
 const idRes = this.snowflakeIDGenerator.generate<AccountID>()
