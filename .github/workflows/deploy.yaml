@@ -22,7 +22,7 @@ jobs:
       MDBOOK_VERSION: '0.4.52'
 
       # renovate: slowsage/mdbook-pagetoc
-      MDBOOK_PAGETOC_VERSION: '0.2.0'
+      MDBOOK_PAGETOC_VERSION: '0.2.2'
 
       # renovate: lambdalisue/rs-mdbook-alerts
       MDBOOK_ALERTS_VERSION: '0.5.2'
