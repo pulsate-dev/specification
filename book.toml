@@ -2,7 +2,6 @@
 src = "src"
 title = "Pulsate Specification"
 language = "ja"
-multilingual = false
 authors = ["Pulsate Project Team <info@pulsate.dev>"]
 
 [build]
