@@ -20,9 +20,6 @@ jobs:
     env:
       # renovate: rust-lang/mdBook
       MDBOOK_VERSION: '0.5.0'
-
-      # renovate: slowsage/mdbook-pagetoc
-      MDBOOK_PAGETOC_VERSION: '0.3.0'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
