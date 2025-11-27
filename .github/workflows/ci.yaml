@@ -13,7 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # renovate: rust-lang/mdBook
-      MDBOOK_VERSION: '0.4.40'
+      MDBOOK_VERSION: '0.5.0'
+
+      # renovate: slowsage/mdbook-pagetoc
+      MDBOOK_PAGETOC_VERSION: '0.3.0'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -27,6 +30,15 @@ jobs:
         uses: peaceiris/actions-mdbook@v2
         with:
           mdbook-version: ${{ env.MDBOOK_VERSION }}
+
+      - name: Setup cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          prefix-key: "mdbook-template/gh-actions-cache"
+
+      - name: Install mdbook plugins
+        run: |
+          cargo install mdbook-pagetoc --version ${{ env.MDBOOK_PAGETOC_VERSION }}
 
       - name: Run fmt
         run: |
