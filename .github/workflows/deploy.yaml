@@ -22,10 +22,7 @@ jobs:
       MDBOOK_VERSION: '0.5.0'
 
       # renovate: slowsage/mdbook-pagetoc
-      MDBOOK_PAGETOC_VERSION: '0.2.2'
-
-      # renovate: lambdalisue/rs-mdbook-alerts
-      MDBOOK_ALERTS_VERSION: '0.5.2'
+      MDBOOK_PAGETOC_VERSION: '0.3.0'
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -49,7 +46,6 @@ jobs:
       - name: Install mdbook plugins
         run: |
           cargo install mdbook-pagetoc --version ${{ env.MDBOOK_PAGETOC_VERSION }}
-          cargo install mdbook-alerts --version ${{ env.MDBOOK_ALERTS_VERSION }}
 
       - name: Build with mdbook
         run: mdbook build

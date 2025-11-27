@@ -8,6 +8,4 @@ authors = ["Pulsate Project Team <info@pulsate.dev>"]
 build-dir = "build"
 create-missing = false
 
-[preprocessor.alerts]
-
 [preprocessor.pagetoc]
