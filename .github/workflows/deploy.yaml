@@ -38,14 +38,11 @@ jobs:
         with:
           mdbook-version: ${{ env.MDBOOK_VERSION }}
 
-      - name: Setup cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: "mdbook-template/gh-actions-cache"
-
       - name: Install mdbook plugins
-        run: |
-          cargo install mdbook-pagetoc --version ${{ env.MDBOOK_PAGETOC_VERSION }}
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: mdbook-pagetoc
+          version: ${{ env.MDBOOK_PAGETOC_VERSION }}
 
       - name: Build with mdbook
         run: mdbook build
