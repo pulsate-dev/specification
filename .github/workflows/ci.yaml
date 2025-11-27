@@ -14,9 +14,6 @@ jobs:
     env:
       # renovate: rust-lang/mdBook
       MDBOOK_VERSION: '0.5.0'
-
-      # renovate: slowsage/mdbook-pagetoc
-      MDBOOK_PAGETOC_VERSION: '0.3.0'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -26,19 +23,10 @@ jobs:
         with:
           deno-version: 2.x
 
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
       - name: Install mdbook
         uses: peaceiris/actions-mdbook@v2
         with:
           mdbook-version: ${{ env.MDBOOK_VERSION }}
-
-      - name: Install mdbook plugins
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: mdbook-pagetoc
-          version: ${{ env.MDBOOK_PAGETOC_VERSION }}
 
       - name: Run fmt
         run: |

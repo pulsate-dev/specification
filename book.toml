@@ -7,5 +7,3 @@ authors = ["Pulsate Project Team <info@pulsate.dev>"]
 [build]
 build-dir = "build"
 create-missing = false
-
-[preprocessor.pagetoc]
