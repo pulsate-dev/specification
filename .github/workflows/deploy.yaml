@@ -19,13 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # renovate: rust-lang/mdBook
-      MDBOOK_VERSION: '0.4.52'
-
-      # renovate: slowsage/mdbook-pagetoc
-      MDBOOK_PAGETOC_VERSION: '0.2.2'
-
-      # renovate: lambdalisue/rs-mdbook-alerts
-      MDBOOK_ALERTS_VERSION: '0.5.2'
+      MDBOOK_VERSION: '0.5.1'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -33,23 +27,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
       - name: Install mdbook
         uses: peaceiris/actions-mdbook@v2
         with:
           mdbook-version: ${{ env.MDBOOK_VERSION }}
-
-      - name: Setup cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: "mdbook-template/gh-actions-cache"
-
-      - name: Install mdbook plugins
-        run: |
-          cargo install mdbook-pagetoc --version ${{ env.MDBOOK_PAGETOC_VERSION }}
-          cargo install mdbook-alerts --version ${{ env.MDBOOK_ALERTS_VERSION }}
 
       - name: Build with mdbook
         run: mdbook build
