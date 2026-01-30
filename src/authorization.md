@@ -22,7 +22,7 @@ interface PolicyArgs<Actor, Action, Resource> {
   resource: Resource
 }
 
-type NotePolicyArgs = PolicyArgs<Account, NotePolicyActions, Note>
+type NotePolicyArgs = PolicyArgs<Account, NotePolicyScope, Note>
 
 class NotePolicy {
   static isAllowed(args: NotePolicyArgs): Option.Option<Error> {
