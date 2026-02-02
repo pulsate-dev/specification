@@ -9,16 +9,14 @@
   - `read`: 読み取り
   - `write`: 書き込み，更新(リソースが更新可能な場合)，リソースの削除
 - `Resource`: `Action`の対象となるもの．
+- `Target`: 操作が許可されたときに使用する，操作を行うまたは操作後のリソースを保存するもの．
 - `Policy`: `Actor`が`Action`を実行するための条件．
 
 ## 全体像
 
 - Pulsate API での認可制御は Policy クラスによって定義される．
-- Policy クラス は `check` static メソッドを持ち，actor, action, resource
-  の3値を要求する．
-  - `check` メソッドは `Option.Option<Error>` を返す．
-    - 要求が拒否された場合は `Option.Some<Error>` を返し，要求が承認された場合は
-      `Option.None()` を返す．
+- Policy クラスは `withCheck` static メソッドを持ち，actor, action, resource, targetの3値，および関数 `fn` を要求する．
+  - `withCheck` メソッドはジェネリクス `<Target,Res>` を受け取る．`Target` は target の型，`Res` は `fn` の返値である．
 
 ```ts
 interface PolicyArgs<Actor, Action, Resource> {
@@ -30,8 +28,15 @@ interface PolicyArgs<Actor, Action, Resource> {
 type NotePolicyArgs = PolicyArgs<Account, NotePolicyScope, Note>;
 
 class NotePolicy {
-  static check(args: NotePolicyArgs): Option.Option<Error> {
-    // 略
+  static withCheck<Target, Res>(target: Target): (args: NotePolicyArgs, fn: (target: Target) => Promise<Result.Result<Error, Res>>) => Promise<Result.Result<Error, Res>> {
+    return async (
+            args: AccountPolicyArgs,
+            fn: (target: Target) => Promise<Result.Result<Error, Res>>
+    ): Promise<Result.Result<Error, Res>> => {
+      if (!args.actor) return Result.err(Error("ログインしないと使えません"));
+      // 条件を満たしたときだけ実行する
+      return await fn(target);
+    };
   }
 }
 ```
@@ -53,5 +58,5 @@ Action は識別子 PolicyScope を用いて識別する．
 type PolicyScope = `${PolicyName}.${ModelName}:${ActionName}`;
 ```
 
-- `check` メソッドは，PolicyScope
+- `withCheck` メソッドは，PolicyScope
   のポリシー名が自分が管理するものでない場合，エラーを返す．
