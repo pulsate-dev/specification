@@ -15,9 +15,9 @@
 
 ## 全体像
 
-- Pulsate API での認可制御は Policy クラスによって定義される．
-- Policy クラスは `withCheck` static メソッドを持ち，actor, action, resource,
-  targetの3値，および関数 `fn` を要求する．
+- Pulsate API での認可制御は Policy を接尾辞にもつクラス群によって定義される．
+- この Policy クラス群の各クラスは `withCheck` static メソッドを持ち，actor,
+  action, resource, targetの3値，および関数 `fn` を要求する．
   - `withCheck` メソッドはジェネリクス `<Target,Res>` を受け取る．`Target` は
     target の型，`Res` は `fn` の返値である．
 
@@ -28,7 +28,7 @@ interface PolicyArgs<Actor, Action, Resource> {
   resource: Resource;
 }
 
-type NotePolicyArgs = PolicyArgs<Account, NotePolicyScope, Note>;
+type NotePolicyArgs = PolicyArgs<Account, NotePolicyAction, Note>;
 
 class NotePolicy {
   static withCheck<Target, Res>(
@@ -49,11 +49,11 @@ class NotePolicy {
 }
 ```
 
-### PolicyScope
+### PolicyAction
 
-Action は識別子 PolicyScope を用いて識別する．
+Action は識別子 PolicyAction を用いて識別する．
 
-- PolicyScope は3つの要素からなる文字列である．
+- PolicyAction は3つの要素からなる文字列である．
 - 要素は以下の通り．
   - 1: ポリシー名
   - 2: モデル名 (例: `account`, `note`)
@@ -63,8 +63,8 @@ Action は識別子 PolicyScope を用いて識別する．
 - これらは以下で示す型で表現できる形式に従って結合される．
 
 ```ts
-type PolicyScope = `${PolicyName}.${ModelName}:${ActionName}`;
+type PolicyAction = `${PolicyName}.${ModelName}:${ActionName}`;
 ```
 
-- `withCheck` メソッドは，PolicyScope
+- `withCheck` メソッドは，PolicyAction
   のポリシー名が自分が管理するものでない場合，エラーを返す．
