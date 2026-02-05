@@ -1,90 +1,70 @@
-# アクセス制御
+# 認可制御
 
-## アカウントのロール
+このドキュメントでは，Pulsate API(v0) における認可制御について記述する．
 
-ロールは自分以外のアカウントに対して操作を実行可能であるかを制御する.
+## 用語
 
-表1: 可能な操作一覧
+- `Actor`: アクションを実行する主体．`Account`が該当する．
+- `Action`: リソースに対して行う何らかの操作のこと．
+  - `read`: 読み取り
+  - `write`: 書き込み，更新(リソースが更新可能な場合)，リソースの削除
+- `Resource`: `Action`の対象となるもの．
+- `Target`:
+  操作が許可されたときに使用する，操作を行うまたは操作後のリソースを保存するもの．
+- `Policy`: `Actor`が`Action`を実行するための条件．
 
-|      操作名      |                     備考                     | `Admin` | `Moderator` |
-| :--------------: | :------------------------------------------: | :-----: | :---------: |
-|   他アカウント   | 凍結、サイレンスの実行、アカウント情報の閲覧 |    Y    |      Y      |
-| ノート/メディア  |            ノート/メディアの削除             |    Y    |      Y      |
-| 通報に関する操作 |         通報の確認/解決、警告の送信          |    Y    |      Y      |
-| 不要メディア削除 |     どこからも参照されないメディアの削除     |    Y    |      N      |
-|     統計情報     |              稼働統計情報の閲覧              |    Y    |      Y      |
-|   システム設定   |              設定値の閲覧/変更               |    Y    |      N      |
-|     お知らせ     |             お知らせの送信、編集             |    Y    |      N      |
-|  カスタム絵文字  |              登録、無効化、削除              |    Y    |      Y      |
-|  他インスタンス  |      インスタンスのサイレンス/ブロック       |    Y    |      N      |
+## 全体像
 
-※ Y: 操作、閲覧が可能 / N: 操作、閲覧が不可能
+- Pulsate API での認可制御は Policy を接尾辞にもつクラス群によって定義される．
+- この Policy クラス群の各クラスは `withCheck` static メソッドを持ち，actor,
+  action, resource, targetの3値，および関数 `fn` を要求する．
+  - `withCheck` メソッドはジェネリクス `<Target,Res>` を受け取る．`Target` は
+    target の型，`Res` は `fn` の返値である．
 
-### Admin (管理者)
+```ts
+interface PolicyArgs<Actor, Action, Resource> {
+  actor: Actor;
+  action: Action;
+  resource: Resource;
+}
 
-管理者.\
-全ての操作が実行可能.
+type NotePolicyArgs = PolicyArgs<Account, NotePolicyAction, Note>;
 
-### Moderator (モデレーター)
+class NotePolicy {
+  static withCheck<Target, Res>(
+    target: Target,
+  ): (
+    args: NotePolicyArgs,
+    fn: (target: Target) => Promise<Result.Result<Error, Res>>,
+  ) => Promise<Result.Result<Error, Res>> {
+    return async (
+      args: AccountPolicyArgs,
+      fn: (target: Target) => Promise<Result.Result<Error, Res>>,
+    ): Promise<Result.Result<Error, Res>> => {
+      if (!args.actor) return Result.err(Error("ログインしないと使えません"));
+      // 条件を満たしたときだけ実行する
+      return await fn(target);
+    };
+  }
+}
+```
 
-モデレーター.\
-(自他問わず)インスタンス、お知らせ以外の操作を実行可能
+### PolicyAction
 
-> [!IMPORTANT]
->
-> モデレーターは一般ロールのアカウントに対する操作のみ実行可能.
+Action は識別子 PolicyAction を用いて識別する．
 
-### Normal (一般)
+- PolicyAction は3つの要素からなる文字列である．
+- 要素は以下の通り．
+  - 1: ポリシー名
+  - 2: モデル名 (例: `account`, `note`)
+    - モデルではないものも含む (例: `follow` )．
+    - タイムラインの場合はタイムライン種別名とする (例: `home`, `conversation`)
+  - 3: アクション名
+- これらは以下で示す型で表現できる形式に従って結合される．
 
-通常のユーザー.\
-自分のリソースに対する操作のみを行うことが可能.
+```ts
+type PolicyAction = `${PolicyName}.${ModelName}:${ActionName}`;
+```
 
-## メールアドレス検証状態
-
-メールアドレスの検証が行われたかを示すもの.
-
-### notActivated (メールアドレス未検証)
-
-メールアドレスの検証が行われていない状態.\
-検証が行われていないアカウントは一定期間(設定可能)経過後に自動で削除される(設定で行わないことも可能)
-
-メールアドレス検証トークンの再送信のリクエスト と アカウント削除 のみ実行可能.
-
-### Active (メールアドレス検証済み)
-
-メールアドレスの検証が行われたことを示す状態.
-
-設定されているロールの権限に基づく全ての操作が実行可能になる.
-
-## アカウント状態
-
-アカウントの現在の状態を示すもの.
-
-### Notmal(通常)
-
-通常の状態.\
-設定されているロール権限に基づく全ての操作が実行可能.
-
-> [!IMPORTANT]
->
-> ただし、メールアドレス検証状態が`notActivated`である場合はそちらが優先される
-
-### Frozen(凍結済み)
-
-凍結済み状態.\
-ログインを含む全ての操作が**実行不可能**.\
-そのアカウントの投稿,
-メディアは`Admin`/`Moderator`ロール以外のアカウントから閲覧できなくなる.
-
-> [!IMPORTANT]
->
-> 凍結状態が解除(解凍)された場合は、投稿やメディアは他のアカウントから閲覧可能になる.
-
-### Silenced(サイレンス済み)
-
-サイレンス済み状態.\
-そのアカウントは新規投稿の公開範囲で`PUBLIC`を選択できなくなる
-
-> [!IMPORTANT]
->
-> サイレンス状態が解除されても、サイレンス中に行われた投稿の公開範囲は変更されない.
+- `withCheck` メソッドは，PolicyAction
+  のポリシー名が自分が管理するものでない場合，エラーを返す．
