@@ -1,7 +1,14 @@
 # Account モジュール
 
-特に断りがない限り，文字列長 `L` は JavaScript の `[...string].length`
-で計算できる値とする．
+特に断りがない限り，文字列長 `L` は **以下のコードを実行して計算できる文字数**
+とする．
+
+```ts
+const count = (s: string) => {
+  const segmenter = new Intl.Segmenter("ja-JP", { granularity: "grapheme" });
+  return [...segmenter.segment(s)].length;
+};
+```
 
 ## `Account`
 
