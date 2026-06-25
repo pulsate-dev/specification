@@ -1,16 +1,18 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-      "config:recommended"
-    ],
-    "customManagers": [
-      {
-        "customType": "regex",
-        "fileMatch": ["(^|/)\\.github/workflows/deploy\\.yaml$"],
-        "matchStrings": ["#\\s?renovate: rust-lang/mdBook\\s*MDBOOK_VERSION:\\s*'(?<currentValue>\\d\\.\\d+\\.\\d+)'"],
-        "depNameTemplate": "mdbook",
-        "packageNameTemplate": "rust-lang/mdBook",
-        "datasourceTemplate": "github-releases"
-      }
-    ]
-  }
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["(^|/)\\.github/workflows/deploy\\.yaml$"],
+      "matchStrings": [
+        "#\\s?renovate: rust-lang/mdBook\\s*MDBOOK_VERSION:\\s*'(?<currentValue>\\d\\.\\d+\\.\\d+)'"
+      ],
+      "depNameTemplate": "mdbook",
+      "packageNameTemplate": "rust-lang/mdBook",
+      "datasourceTemplate": "github-releases"
+    }
+  ]
+}

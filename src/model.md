@@ -1,5 +1,15 @@
 # モデルリファレンス
 
+Pulsate
+のドメインモデルに共通する仕様と，新しいモデルを追加するパターンをまとめる．
+各モジュール固有のモデルの詳細は以下を参照すること．
+
+- [Account モジュール編](./model/account.md)
+- [Note モジュール編](./model/note.md)
+- [Drive モジュール編](./model/drive.md)
+- [List モジュール編](./model/list.md)
+- [Notification モジュール編](./model/notification.md)
+
 ## ID
 
 Twitter の Snowflake をベースに, 次のようなビットフィールド
@@ -175,10 +185,10 @@ stateDiagram-v2
 
 まだ実際にアカウントが発行されておらず,
 メールアドレスを検証するスキームに入れられているアカウントです.
-アカウントに加えて次の属性を持っており,
 このアカウントは通常のアカウントとは別の領域に永続化されます.
 
-- `state`: メールアドレスの検証のために `mail` へと送信した暗号学的乱数
+メールアドレスの検証に用いるトークンはこのモデルに含まれず,
+`AccountVerifyTokenRepository` にアカウント ID と対にして別途保存されます.
 
 なお, 登録中アカウントが追加されてから 168 時間(7days)
 が経過したものは無効とみなします.
@@ -213,3 +223,54 @@ stateDiagram-v2
 ```
 
 </details>
+
+## 新しいモデルを追加する
+
+### ID 型の定義
+
+新しいエンティティには必ずそのエンティティ専用の ID 型を定義する． `ID<T>`
+の型引数にエンティティのクラスを渡すことで，異なるエンティティの ID
+を混同するコンパイルエラーを得られる．
+
+```typescript
+export type ListID = ID<List>;
+```
+
+### エラー型の定義
+
+モジュール内で発生するエラーは `model/errors.ts` にまとめて定義する． エラー名は
+PascalCase で，エラーの内容が一目でわかる名称をつける．
+
+```typescript
+export class AccountNotFoundError extends Error {}
+export class AlreadyFollowingError extends Error {}
+```
+
+### Repository インタフェースの定義
+
+モデルの永続化操作は `model/repository.ts` にインタフェースとして定義し，実装は
+`adaptor/repository/` に置く． Service
+はこのインタフェースに依存し，具体的な永続化実装には依存しない．
+
+```typescript
+export interface AccountRepository {
+  findByID(id: AccountID): Promise<Option.Option<Account>>;
+  create(account: Account): Promise<void>;
+}
+```
+
+### `SnowflakeIDGenerator` の受け取り方
+
+Service から ID を生成する際は `SnowflakeIDGenerator`
+をコンストラクタで受け取る．
+直接インポートして使うと，テスト時に差し替えられなくなる．
+
+```typescript
+export class CreateNoteService {
+  private readonly idGenerator: SnowflakeIDGenerator;
+
+  constructor(arg: { idGenerator: SnowflakeIDGenerator }) {
+    this.idGenerator = arg.idGenerator;
+  }
+}
+```
