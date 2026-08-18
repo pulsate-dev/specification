@@ -11,6 +11,7 @@
   - [Drive モジュール](./model/drive.md)
   - [List モジュール](./model/list.md)
   - [Notification モジュール](./model/notification.md)
+  - [ドメインイベント](./model/event.md)
 - [API エンドポイント](./endpoint.md)
   - [アカウントAPI](./endpoint/account.md)
   - [ドライブAPI](./endpoint/drive.md)
