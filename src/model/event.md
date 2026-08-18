@@ -59,7 +59,7 @@ AccountID を `actor` として扱う．
 ```ts
 class Account {
   // AccountEventsはAccountモデルで発生するDomainEventの型の集合
-  #events: AccountEvent[]
+  #events: AccountEvent[];
   setBio(actor: AccountID, text: string) {
     // ...略
     this.#events.push(
@@ -68,8 +68,8 @@ class Account {
         target: this.#id,
         eventName: "account.bio.updated",
         bio: text,
-      })
-    )
+      }),
+    );
   }
 }
 ```
