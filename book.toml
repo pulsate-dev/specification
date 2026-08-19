@@ -7,3 +7,13 @@ authors = ["Pulsate Project Team <info@pulsate.dev>"]
 [build]
 build-dir = "build"
 create-missing = false
+
+[preprocessor]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output]
+
+[output.html]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
