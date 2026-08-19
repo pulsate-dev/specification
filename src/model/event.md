@@ -84,7 +84,8 @@ pullEvents(): AccountEvent[] {
 }
 ```
 
-取り出されたドメインイベントは，Application Serviceによってイベントバスに発行（publish）される．
+取り出されたドメインイベントは，Application
+Serviceによってイベントバスに発行（publish）される．
 イベントバスは非同期にイベントを配送し，購読している`Intermodule`
 パッケージへ届ける．発行から後続処理までの一連の流れは，次のようになる．
 
@@ -115,8 +116,7 @@ sequenceDiagram
 - **発生条件**：ユーザーが登録フォームを送信し，`InactiveAccount`
   が作成されたとき
 - **ペイロード**（`AccountRegisteredEventPayload`）：
-  - **`actor`**：登録するアカウント自身の AccountID（`InactiveAccount` の
-    `id`）
+  - **`actor`**：登録するアカウント自身の AccountID（`InactiveAccount` の `id`）
   - **`name`**：AccountName
   - **`mail`**：メールアドレス
 - **後続処理**：
@@ -145,10 +145,10 @@ flowchart LR
 
 - 3
   つのイベントは，更新された属性が異なるだけで同じ構造を持つため，まとめて記載する．
-- **発生条件**：ユーザーがプロフィール編集 API 経由で
-  `bio`，`nickname`，`mail` のいずれかを更新したとき
-- **ペイロード**：`actor`（AccountID，更新を行った本人）に加えて，更新後の値を
-  1 件持つ
+- **発生条件**：ユーザーがプロフィール編集 API 経由で `bio`，`nickname`，`mail`
+  のいずれかを更新したとき
+- **ペイロード**：`actor`（AccountID，更新を行った本人）に加えて，更新後の値を 1
+  件持つ
   - `account.bio.updated`（`AccountBioUpdatedEventPayload`）：**`bio`**：自己紹介文
   - `account.nickname.updated`（`AccountNicknameUpdatedEventPayload`）：**`nickname`**：表示名
   - `account.email.updated`（`AccountEmailUpdatedEventPayload`）：**`mail`**：メールアドレス
@@ -267,8 +267,7 @@ flowchart LR
 
 #### `account.follow.unblocked`：ブロック解除
 
-- **発生条件**：ブロックを解除したとき（`BLOCKING` から `NONE`
-  へ遷移したとき）
+- **発生条件**：ブロックを解除したとき（`BLOCKING` から `NONE` へ遷移したとき）
 - **ペイロード**（`AccountFollowUnblockedEventPayload`）：
   - **`actor`**：ブロックを解除したアカウントの AccountID
   - **`targetId`**：ブロックを解除されたアカウントの AccountID
