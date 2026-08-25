@@ -107,6 +107,29 @@ sequenceDiagram
     他モジュール ->> Intermodule: 後続処理を実行
 ```
 
+## モジュール間のイベント
+
+各イベントから後続処理への関係を，モジュール単位でまとめると次のようになる．
+図中のラベルはイベント名と後続処理を示す．
+
+```mermaid
+flowchart LR
+    Account["Accountモジュール"]
+    Note["Noteモジュール"]
+    Drive["Driveモジュール"]
+    List["Listモジュール"]
+    Timeline["Timelineモジュール"]
+    Notification["Notificationモジュール"]
+    Mail["メールサービス（外部）"]
+
+    Account -->|"account.registered: 検証コードのメール送信"| Mail
+    Account -->|"account.activated: タイムライン生成<br/>account.follow.blocked: タイムラインからの除去"| Timeline
+    Account -->|"account.follow.requested: 通知発火<br/>account.follow.accepted: フォロー成功通知発火<br/>account.follow.rejected: フォロー失敗通知発火"| Notification
+    Note -->|"note.created: タイムラインへの配信<br/>note.deleted: タイムラインからの除去"| Timeline
+    Note -->|"note.renoted: リノート通知<br/>note.reaction.created: リアクション通知"| Notification
+    List -->|"list.member.appended: 通知発火"| Notification
+```
+
 ## Account モジュール
 
 ### `Account`
@@ -120,12 +143,7 @@ sequenceDiagram
   - **`name`**：AccountName
   - **`mail`**：メールアドレス
 - **後続処理**：
-  - （モジュール間）検証コードのメール送信
-
-```mermaid
-flowchart LR
-    ev["account.registered"] -->|"検証コードのメール送信"| mod["メールサービス（外部）"]
-```
+  - （外部）検証コードのメール送信
 
 #### `account.activated`：アカウントの有効化
 
@@ -135,11 +153,6 @@ flowchart LR
   - **`actor`**：有効化されるアカウント自身の AccountID
 - **後続処理**：
   - （モジュール間）タイムライン生成
-
-```mermaid
-flowchart LR
-    ev["account.activated"] -->|"タイムライン生成"| mod["Timelineモジュール"]
-```
 
 #### `account.bio.updated`，`account.nickname.updated`，`account.email.updated`：プロフィール属性の更新
 
@@ -200,11 +213,6 @@ flowchart LR
 - **後続処理**：
   - （モジュール間）通知発火
 
-```mermaid
-flowchart LR
-    ev["account.follow.requested"] -->|"通知発火"| mod["Notificationモジュール"]
-```
-
 #### `account.follow.accepted`：フォロー承認
 
 - **発生条件**：フォローリクエストが承認されたとき（`REQUESTING_FOLLOW` から
@@ -220,11 +228,6 @@ flowchart LR
 - **後続処理**：
   - （モジュール間）フォロー成功通知発火
 
-```mermaid
-flowchart LR
-    ev["account.follow.accepted"] -->|"フォロー成功通知発火"| mod["Notificationモジュール"]
-```
-
 #### `account.follow.rejected`：フォロー拒否
 
 - **発生条件**：フォローリクエストが拒否されたとき（`REQUESTING_FOLLOW` から
@@ -236,11 +239,6 @@ flowchart LR
   - **`actor`**：フォローリクエストを拒否したアカウントの AccountID
 - **後続処理**：
   - （モジュール間）フォロー失敗通知発火
-
-```mermaid
-flowchart LR
-    ev["account.follow.rejected"] -->|"フォロー失敗通知発火"| mod["Notificationモジュール"]
-```
 
 #### `account.follow.unfollowed`：フォロー解除
 
@@ -259,11 +257,6 @@ flowchart LR
   - **`targetId`**：ブロックされたアカウントの AccountID
 - **後続処理**：
   - （モジュール間）タイムラインからの除去
-
-```mermaid
-flowchart LR
-    ev["account.follow.blocked"] -->|"タイムラインからの除去"| mod["Timelineモジュール"]
-```
 
 #### `account.follow.unblocked`：ブロック解除
 
@@ -291,11 +284,6 @@ flowchart LR
 - （検討中）`visibility` が `direct`
   のダイレクト投稿（[`DirectNote`](./note.md#directnote-ダイレクト投稿)を参照）作成時に対応するイベントは本ページに未定義．本イベントの対象に含めるか，別イベントとするかは要検討
 
-```mermaid
-flowchart LR
-    ev["note.created"] -->|"タイムラインへの配信"| mod["Timelineモジュール"]
-```
-
 #### `note.deleted`：投稿削除
 
 - **発生条件**：投稿者自身または管理者がノートを削除したとき
@@ -306,11 +294,6 @@ flowchart LR
   - **`authorId`**：投稿者の AccountID（`actor` と異なる場合がある）
 - **後続処理**：
   - （モジュール間）タイムラインからの除去
-
-```mermaid
-flowchart LR
-    ev["note.deleted"] -->|"タイムラインからの除去"| mod["Timelineモジュール"]
-```
 
 #### `note.renoted`：リノート
 
@@ -323,11 +306,6 @@ flowchart LR
   - **`actor`**：リノートを行ったアカウントの AccountID
 - **後続処理**：
   - （モジュール間）リノート通知
-
-```mermaid
-flowchart LR
-    ev["note.renoted"] -->|"リノート通知"| mod["Notificationモジュール"]
-```
 
 ### `Bookmark`
 
@@ -356,11 +334,6 @@ flowchart LR
   - **`reaction`**：リアクションの絵文字
 - **後続処理**：
   - （モジュール間）リアクション通知
-
-```mermaid
-flowchart LR
-    ev["note.reaction.created"] -->|"リアクション通知"| mod["Notificationモジュール"]
-```
 
 #### `note.reaction.deleted`：リアクション解除
 
@@ -431,11 +404,6 @@ flowchart LR
 - **後続処理**：
   - （モジュール間，`public` が `true`
     のリストのみ）アサインされたアカウントへの通知発火
-
-```mermaid
-flowchart LR
-    ev["list.member.appended"] -->|"アサインされたアカウントへの通知発火"| mod["Notificationモジュール"]
-```
 
 #### `list.member.removed`：リストメンバー削除
 
