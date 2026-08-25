@@ -9,7 +9,7 @@
   - [Account モジュール](./model/account.md)
   - [Note モジュール](./model/note.md)
   - [Drive モジュール](./model/drive.md)
-  - [List モジュール](./model/list.md)
+  - [List モデル](./model/list.md)
   - [Notification モジュール](./model/notification.md)
   - [ドメインイベント](./model/event.md)
 - [API エンドポイント](./endpoint.md)

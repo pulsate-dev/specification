@@ -117,7 +117,6 @@ flowchart LR
     Account["Accountモジュール"]
     Note["Noteモジュール"]
     Drive["Driveモジュール"]
-    List["Listモジュール"]
     Timeline["Timelineモジュール"]
     Notification["Notificationモジュール"]
     Mail["メールサービス（外部）"]
@@ -127,7 +126,7 @@ flowchart LR
     Account -->|"account.follow.requested: 通知発火<br/>account.follow.accepted: フォロー成功通知発火<br/>account.follow.rejected: フォロー失敗通知発火"| Notification
     Note -->|"note.created: タイムラインへの配信<br/>note.deleted: タイムラインからの除去"| Timeline
     Note -->|"note.renoted: リノート通知<br/>note.reaction.created: リアクション通知"| Notification
-    List -->|"list.member.appended: 通知発火"| Notification
+    Timeline -->|"list.member.appended: 通知発火"| Notification
 ```
 
 ## Account モジュール
@@ -376,7 +375,7 @@ flowchart LR
   - **`actor`**：操作を行った管理者の AccountID
   - **`mediumId`**：MediumID
 
-## List モジュール
+## Timeline モジュール
 
 ### `List`
 
