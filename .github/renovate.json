@@ -13,6 +13,16 @@
       "depNameTemplate": "mdbook",
       "packageNameTemplate": "rust-lang/mdBook",
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["(^|/)\\.github/workflows/(deploy|ci)\\.yaml$"],
+      "matchStrings": [
+        "#\\s?renovate: badboy/mdbook-mermaid\\s*MDBOOK_MERMAID_VERSION:\\s*\"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
+      ],
+      "depNameTemplate": "mdbook-mermaid",
+      "packageNameTemplate": "badboy/mdbook-mermaid",
+      "datasourceTemplate": "github-releases"
     }
   ]
 }

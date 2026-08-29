@@ -2,13 +2,14 @@
 
 Pulsate
 のドメインモデルに共通する仕様と，新しいモデルを追加するパターンをまとめる．
-各モジュール固有のモデルの詳細は以下を参照すること．
+各モジュールのモデルと，Timelineモジュールに含まれるListモデルの詳細は以下を参照すること．
 
 - [Account モジュール編](./model/account.md)
 - [Note モジュール編](./model/note.md)
 - [Drive モジュール編](./model/drive.md)
-- [List モジュール編](./model/list.md)
+- [List モデル編](./model/list.md)
 - [Notification モジュール編](./model/notification.md)
+- [ドメインイベント](./model/event.md)
 
 ## ID
 
