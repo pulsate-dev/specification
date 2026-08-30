@@ -79,10 +79,10 @@ sequenceDiagram
   Pulsate -->> Alice: Bob の情報を提供
   Alice ->> Pulsate: Bob のフォローを要求
   Pulsate ->> Bob: フォローリクエストを通知
-  alt Bob が Alice を知っている
+  alt Bob が Alice からのフォローを承認する場合
     Bob ->> Pulsate: リクエストを承認
     Pulsate -->> Alice: フォロー完了
-  else 知らない
+  else Bob が Alice からのフォローを承認しない場合
     Bob ->> Pulsate: リクエストを拒否
     Pulsate -->> Pulsate: 何もしない
   end
