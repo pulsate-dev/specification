@@ -6,7 +6,9 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.github/workflows/deploy\\.yaml$"],
+      "managerFilePatterns": [
+        "/(^|/)\\.github/workflows/deploy\\.yaml$/"
+      ],
       "matchStrings": [
         "#\\s?renovate: rust-lang/mdBook\\s*MDBOOK_VERSION:\\s*'(?<currentValue>\\d\\.\\d+\\.\\d+)'"
       ],
@@ -16,7 +18,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.github/workflows/(deploy|ci)\\.yaml$"],
+      "managerFilePatterns": [
+        "/(^|/)\\.github/workflows/(deploy|ci)\\.yaml$/"
+      ],
       "matchStrings": [
         "#\\s?renovate: badboy/mdbook-mermaid\\s*MDBOOK_MERMAID_VERSION:\\s*\"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
       ],
