@@ -3,31 +3,5 @@
   "extends": [
     "config:recommended",
     "helpers:pinGitHubActionDigests"
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/(^|/)\\.github/workflows/deploy\\.yaml$/"
-      ],
-      "matchStrings": [
-        "#\\s?renovate: rust-lang/mdBook\\s*MDBOOK_VERSION:\\s*'(?<currentValue>\\d\\.\\d+\\.\\d+)'"
-      ],
-      "depNameTemplate": "mdbook",
-      "packageNameTemplate": "rust-lang/mdBook",
-      "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/(^|/)\\.github/workflows/(deploy|ci)\\.yaml$/"
-      ],
-      "matchStrings": [
-        "#\\s?renovate: badboy/mdbook-mermaid\\s*MDBOOK_MERMAID_VERSION:\\s*\"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
-      ],
-      "depNameTemplate": "mdbook-mermaid",
-      "packageNameTemplate": "badboy/mdbook-mermaid",
-      "datasourceTemplate": "github-releases"
-    }
   ]
 }
