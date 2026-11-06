@@ -2,7 +2,6 @@
 
 <!-- toc -->
 
-<!-- dprint-ignore -->
 Pulsate Specification は Pulsate プロジェクトに関するAPIエンドポイントや設計などの仕様を記述したドキュメントです.
 
 プロジェクトの概要については [こちら](./project.md) をご覧ください.
