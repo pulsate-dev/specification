@@ -18,7 +18,7 @@ jobs:
       MDBOOK_MERMAID_VERSION: "0.17.1"
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Setup deno
         uses: denoland/setup-deno@v2
@@ -26,7 +26,7 @@ jobs:
           deno-version: 2.x
 
       - name: Install mdbook
-        uses: peaceiris/actions-mdbook@v2
+        uses: peaceiris/actions-mdbook@ee69d230fe19748b7abf22df32acaa93833fad08 # v2
         with:
           mdbook-version: ${{ env.MDBOOK_VERSION }}
 
