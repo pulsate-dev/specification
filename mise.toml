@@ -1,5 +1,5 @@
 [tools]
-"github:rust-lang/mdBook" = "0.5.3"
+"github:rust-lang/mdBook" = "0.5.4"
 "github:badboy/mdbook-mermaid" = "0.17.1"
 dprint = "0.64.3"
 
