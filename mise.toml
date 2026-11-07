@@ -1,0 +1,25 @@
+[tools]
+"github:rust-lang/mdBook" = "0.5.3"
+"github:badboy/mdbook-mermaid" = "0.17.1"
+dprint = "0.64.3"
+
+[tasks.build]
+run = "mdbook build"
+
+[tasks.dev]
+run = "mdbook serve"
+
+[tasks.watch]
+run = "mdbook watch"
+
+[tasks.test]
+run = "mdbook test"
+
+[tasks.clean]
+run = "mdbook clean"
+
+[tasks.format]
+run = "dprint fmt"
+
+[tasks."format:check"]
+run = "dprint check"
