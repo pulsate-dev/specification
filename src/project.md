@@ -69,7 +69,4 @@ v0 (開発途上バージョン), v1 (最初の安定版) のコードネーム.
 
 由来は Mrs. GREEN APPLE の ANTENNA から.
 
-<!-- dprint-ignore -->
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XiSa_VIrGKE?si=eJz-KfIBeFG_lrSw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
 </details>
